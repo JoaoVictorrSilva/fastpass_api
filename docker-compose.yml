@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+    postgres:
+        image: postgres:16-alpine
+        container_name: leo-web-postgres
+        environment:
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_DB: ${DATABASE_DB}
+        ports:
+            - "5432:5432"
+        volumes:
+            - ~/pgdata2:/var/lib/postgresql/data
+
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: leo-web-api
+        ports:
+            - "${API_PORT}:${API_PORT}"
+        volumes:
+            - .:/app
+        environment:
+            DATABASE_HOST: ${DATABASE_HOST}
+            DATABASE_PORT: ${DATABASE_PORT}
+            DATABASE_USER: ${DATABASE_USER}
+            DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+            DATABASE_NAME: ${DATABASE_DB}
+            NODE_ENV: ${NODE_ENV}
+        depends_on:
+            - postgres
+
+volumes:
+    pgdata2:
