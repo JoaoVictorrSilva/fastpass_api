@@ -20,6 +20,9 @@ model user {
     password String
     user_type String
     company_id Int?
+    cpf String
+    phone String?
+    birth_date DateTime
     company company? @relation(fields: [company_id], references: [id])
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt

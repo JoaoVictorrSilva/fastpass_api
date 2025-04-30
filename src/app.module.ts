@@ -5,6 +5,9 @@ import { EnvModule } from "./infraestructure/env/env.module";
 import { envSchema } from "./infraestructure/env/env";
 import { GlobalExceptionFilter } from "./infraestructure/errors/global-exception.filter";
 import { PrismaModule } from "./infraestructure/database/prisma.module";
+import { CryptographyModule } from "./infraestructure/cryptography/cryptography.module";
+import { ServerModule } from "./infraestructure/server/server.module";
+import { AuthModule } from "./infraestructure/auth/auth.module";
 
 @Module({
     imports: [
@@ -14,7 +17,10 @@ import { PrismaModule } from "./infraestructure/database/prisma.module";
             validate: (env) => envSchema.parse(env),
         }),
         EnvModule,
+        AuthModule,
         PrismaModule,
+        CryptographyModule,
+        ServerModule,
     ],
     providers: [
         {
