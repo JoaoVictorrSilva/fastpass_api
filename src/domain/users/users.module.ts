@@ -7,16 +7,16 @@ import { UserController } from "./controllers/user.controller";
 import { CryptographyModule } from "../../infraestructure/cryptography/cryptography.module";
 
 @Module({
-  imports: [CryptographyModule],
-  controllers: [UserController],
-  providers: [
-    PrismaService,
-    UsersService,
-    {
-      provide: UserRepository,
-      useClass: PrismaUserRepository,
-    },
-  ],
-  exports: [UserRepository, UsersService],
+    imports: [CryptographyModule],
+    controllers: [UserController],
+    providers: [
+        PrismaService,
+        UsersService,
+        {
+            provide: UserRepository,
+            useClass: PrismaUserRepository,
+        },
+    ],
+    exports: [UserRepository, UsersService],
 })
-export class UsersModule {} 
+export class UsersModule {}

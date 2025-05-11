@@ -1,16 +1,18 @@
 import { Entity } from "src/core/shared/entity";
 
-interface UserProps {
-  name: string;
-  email: string;
-  password: string;
-  user_type: string;
-  cpf: string;
-  phone: string | null;
-  birth_date: Date;
-  company_id?: number | null;
-  created_at: Date;
-  updated_at?: Date | null;
+export type UserType = "COMMON" | "ADMIN" | "SUPPLIER";
+
+export interface UserProps {
+    name: string;
+    email: string;
+    password: string;
+    user_type: UserType;
+    cpf: string;
+    phone: string | null;
+    birth_date: Date;
+    company_id?: number | null;
+    created_at: Date;
+    updated_at?: Date | null;
 }
 
 export class User extends Entity<UserProps> {
@@ -30,7 +32,7 @@ export class User extends Entity<UserProps> {
         return this.props.password;
     }
 
-    get userType(): string {
+    get userType(): UserType {
         return this.props.user_type;
     }
 
@@ -58,4 +60,3 @@ export class User extends Entity<UserProps> {
         return this.props.updated_at || null;
     }
 }
-

@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -13,14 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum user_type {
+    ADMIN
+    COMMON
+    SUPPLIER
+}
 model user {
     id Int @id @default(autoincrement())
     name String
     email String @unique
     password String
-    user_type String
+    user_type user_type
     company_id Int?
-    cpf String
+    cpf String @unique
     phone String?
     birth_date DateTime
     company company? @relation(fields: [company_id], references: [id])
