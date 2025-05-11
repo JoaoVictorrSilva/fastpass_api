@@ -1,4 +1,4 @@
-import { UserProps, UserType } from "../entities/user";
+import { UserType } from "../entities/user";
 
 export interface UserDTO {
     id?: number | null;
@@ -7,10 +7,19 @@ export interface UserDTO {
     user_type: UserType;
     cpf: string;
     phone: string | null;
-    birth_date: Date;
+    birth_date: string;
     company_id?: number | null;
     created_at: Date;
     updated_at?: Date | null;
 }
 
-export type UserCreateDTO = Omit<UserProps, "id" | "created_at" | "updated_at" | "user_type">;
+export interface UserCreateDTO {
+    name: string;
+    email: string;
+    password: string;
+    user_type: UserType;
+    cpf: string;
+    phone: string | null;
+    birth_date: string;
+    company_id?: number | null;
+}

@@ -10,6 +10,7 @@ export interface UserProps {
     cpf: string;
     phone: string | null;
     birth_date: Date;
+    refresh_token?: string | null;
     company_id?: number | null;
     created_at: Date;
     updated_at?: Date | null;
@@ -46,6 +47,14 @@ export class User extends Entity<UserProps> {
 
     get birthDate(): Date {
         return this.props.birth_date;
+    }
+
+    get refreshToken(): string | null {
+        return this.props.refresh_token || null;
+    }
+
+    set refreshToken(value: string | null) {
+        this.props.refresh_token = value;
     }
 
     get companyId(): number | null {

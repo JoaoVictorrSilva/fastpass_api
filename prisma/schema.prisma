@@ -29,6 +29,7 @@ model user {
     cpf String @unique
     phone String?
     birth_date DateTime
+    refresh_token String?
     company company? @relation(fields: [company_id], references: [id])
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt

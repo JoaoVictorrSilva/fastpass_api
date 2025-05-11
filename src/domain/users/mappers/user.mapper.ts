@@ -10,7 +10,7 @@ export class UserMapper {
             user_type: user.userType,
             cpf: user.cpf,
             phone: user.phone,
-            birth_date: user.birthDate,
+            birth_date: user.birthDate.toISOString(),
             company_id: user.companyId,
             created_at: user.createdAt,
             updated_at: user.updatedAt,
@@ -27,6 +27,7 @@ export class UserMapper {
                 cpf: prismaUser.cpf,
                 phone: prismaUser.phone,
                 birth_date: prismaUser.birth_date,
+                refresh_token: prismaUser.refresh_token,
                 created_at: prismaUser.created_at,
                 company_id: prismaUser.company_id,
                 updated_at: prismaUser.updated_at,
@@ -43,6 +44,7 @@ export class UserMapper {
             user_type: domainUser.userType,
             cpf: domainUser.cpf,
             phone: domainUser.phone || null,
+            refresh_token: domainUser.refreshToken || null,
             birth_date: domainUser.birthDate,
         };
 
