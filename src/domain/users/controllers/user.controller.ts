@@ -5,6 +5,8 @@ import { z } from "zod";
 import { Public } from "@/infraestructure/auth/public";
 import { ZodValidationPipe } from "@/infraestructure/pipes/zod-validation-pipe";
 import { Role } from "@/infraestructure/auth/role.decorator";
+import { ApiBody, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { UserCreateSwagger } from "../mappers/swagger/singup-body.swagger";
 
 const SignUpBodySchema = z.object({
     name: z.string().min(1),
@@ -19,6 +21,7 @@ const SignUpBodySchema = z.object({
 type SignUpBody = z.infer<typeof SignUpBodySchema>;
 
 @Controller("users")
+@ApiTags("Users")
 export class UserController {
     constructor(private readonly usersService: UsersService) {}
 
@@ -26,6 +29,8 @@ export class UserController {
     @Public()
     @Role()
     @HttpCode(201)
+    @ApiBody({ type: UserCreateSwagger })
+    @ApiResponse({ status: 201, description: "User created successfully" })
     @UsePipes(new ZodValidationPipe(SignUpBodySchema))
     async createUser(@Body() userData: SignUpBody): Promise<UserDTO> {
         return await this.usersService.createUser(userData as UserCreateDTO);
