@@ -31,7 +31,7 @@ This project is the official FastPass applcation API
 
 ## 📚 Documentation
 
-(SpringDocs) API Documentation is available at [docs](http://localhost:3333/api)
+(OpenAPI) API Documentation is available at [docs](http://localhost:3333/api)
 
 ## 📬 Contact Me
 
