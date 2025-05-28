@@ -11,7 +11,8 @@ export interface UserProps {
     phone: string | null;
     birth_date: Date;
     refresh_token?: string | null;
-    company_id?: number | null;
+    balance: number;
+    company_id: number;
     created_at: Date;
     updated_at?: Date | null;
 }
