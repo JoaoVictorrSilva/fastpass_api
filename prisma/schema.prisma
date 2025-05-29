@@ -30,7 +30,7 @@ model user {
     phone String?
     birth_date DateTime
     refresh_token String?
-    balance   Float   @default(0)
+    balance BigInt @default(0)
     company company? @relation(fields: [company_id], references: [id])
     extract extract[]
     created_at DateTime @default(now())  
@@ -44,25 +44,20 @@ model company {
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt
     users user[]
-    extrato extract[]
 }
 
 enum TypeMoviment {
   DEBIT
   CREDIT
-  DEPOSIT
-  TRANSFER
 }
 
 model extract {
     id Int @id @default(autoincrement())
-    value Float
-    type TypeMoviment // debito, credito, deposito, saque, ...
+    value BigInt
+    moviment TypeMoviment // debito, credito
     description String
-    person user @relation(fields: [person_id], references: [id])
-    person_id Int
-    company company @relation(fields: [company_id], references: [id])
-    company_id Int
+    user user @relation(fields: [user_id], references: [id])
+    user_id Int
     created_at DateTime @default(now()) // data e hora
     updated_at DateTime? @updatedAt
 }

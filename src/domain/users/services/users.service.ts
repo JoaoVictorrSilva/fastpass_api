@@ -30,6 +30,7 @@ export class UsersService {
             email: userData.email,
             password: hashedPassword,
             user_type: "COMMON",
+            balance: BigInt(0),
             cpf: userData.cpf,
             phone: userData.phone,
             birth_date: birth_date,

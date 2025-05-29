@@ -10,7 +10,7 @@ COPY . .
 
 RUN chmod +x /usr/src/app/entrypoint.sh
 
-EXPOSE 3000
+EXPOSE 3333
 
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 

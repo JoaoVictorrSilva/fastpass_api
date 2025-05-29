@@ -24,6 +24,7 @@ export class UserMapper {
                 email: prismaUser.email,
                 password: prismaUser.password,
                 user_type: prismaUser.user_type,
+                balance: prismaUser.balance,
                 cpf: prismaUser.cpf,
                 phone: prismaUser.phone,
                 birth_date: prismaUser.birth_date,
