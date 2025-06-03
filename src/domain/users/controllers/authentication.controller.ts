@@ -32,7 +32,7 @@ export class AuthenticationController {
         @Body() body: AuthenticateBody,
         @Res({ passthrough: true }) response: Response,
     ): Promise<Omit<AuthenticateResponse, "refreshToken">> {
-        const { accessToken, refreshToken } = await this.authenticationService.authenticate(body);
+        const { accessToken, expiresIn, refreshToken } = await this.authenticationService.authenticate(body);
 
         response.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -42,7 +42,7 @@ export class AuthenticationController {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        return { accessToken };
+        return { accessToken, expiresIn };
     }
 
     @Public()
@@ -54,10 +54,14 @@ export class AuthenticationController {
     async refreshToken(
         @Cookies("refreshToken") refreshToken: string,
         @Res({ passthrough: true }) response: Response,
-    ): Promise<AuthenticateResponse> {
-        const authentication = await this.authenticationService.refreshToken(refreshToken);
+    ): Promise<Omit<AuthenticateResponse, "refreshToken">> {
+        const {
+            accessToken,
+            expiresIn,
+            refreshToken: newRefreshToken,
+        } = await this.authenticationService.refreshToken(refreshToken);
 
-        response.cookie("refreshToken", authentication.refreshToken, {
+        response.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // true em produção
             sameSite: "strict",
@@ -65,6 +69,6 @@ export class AuthenticationController {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        return authentication;
+        return { accessToken, expiresIn };
     }
 }

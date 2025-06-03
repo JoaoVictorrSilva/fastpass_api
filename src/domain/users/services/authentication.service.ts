@@ -11,6 +11,7 @@ export interface AuthenticateProps {
 
 export interface AuthenticateResponse {
     accessToken: string;
+    expiresIn: number;
     refreshToken: string;
 }
 
@@ -43,6 +44,7 @@ export class AuthenticationService {
 
         return {
             accessToken,
+            expiresIn: 3600, // 1 hour in seconds
             refreshToken,
         };
     }
@@ -71,6 +73,7 @@ export class AuthenticationService {
 
         return {
             accessToken: newAccessToken,
+            expiresIn: 3600, // 1 hour in seconds
             refreshToken: newRefreshToken,
         };
     }
