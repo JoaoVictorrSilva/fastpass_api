@@ -43,6 +43,7 @@ model company {
     cnpj String @unique
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt
+    products product[]
     users user[]
 }
 
@@ -60,4 +61,15 @@ model extract {
     user_id Int
     created_at DateTime @default(now()) // data e hora
     updated_at DateTime? @updatedAt
+}
+
+model product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  value       BigInt
+  company  company @relation(fields: [company_id], references: [id])
+  company_id Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime? @updatedAt
 }
