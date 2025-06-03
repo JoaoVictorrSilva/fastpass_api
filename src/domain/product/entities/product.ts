@@ -1,11 +1,10 @@
 import { Entity } from "@/core/shared/entity";
 
 export interface ProductProps {
-    value: number;
+    value: bigint;
     description: string;
     name: string;
     company_id: number;
-    id: number;
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -14,7 +13,8 @@ export class Product extends Entity<ProductProps> {
     constructor(props: ProductProps, id?: number) {
         super(props, id);
     }
-    get value(): number {
+
+    get value(): bigint {
         return this.props.value;
     }
 
