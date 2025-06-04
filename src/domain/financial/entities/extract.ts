@@ -4,7 +4,9 @@ export interface ExtractProps {
     value: number;
     moviment: "DEBIT" | "CREDIT";
     description: string;
-    userId: number;
+    userFromId: number;
+    userToId: number;
+
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -22,8 +24,11 @@ export class Extract extends Entity<ExtractProps> {
     get description(): string {
         return this.props.description;
     }
-    get userId(): number {
-        return this.props.userId;
+    get userFromId(): number {
+        return this.props.userFromId;
+    }
+    get userToId(): number {
+        return this.props.userToId;
     }
     get createdAt(): Date {
         return this.props.createdAt;
