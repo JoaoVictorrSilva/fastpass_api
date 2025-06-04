@@ -1,7 +1,7 @@
 import { Entity } from "@/core/shared/entity";
 
 export interface ExtractProps {
-    value: number;
+    value: bigint;
     moviment: "DEBIT" | "CREDIT";
     description: string;
     userFromId: number;
@@ -15,7 +15,7 @@ export class Extract extends Entity<ExtractProps> {
     constructor(props: ExtractProps, id?: number) {
         super(props, id);
     }
-    get value(): number {
+    get value(): bigint {
         return this.props.value;
     }
     get moviment(): "DEBIT" | "CREDIT" {
