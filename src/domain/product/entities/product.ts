@@ -5,8 +5,8 @@ export interface ProductProps {
     description: string;
     name: string;
     company_id: number;
-    createdAt: Date;
-    updatedAt?: Date;
+    created_at: Date;
+    updated_at?: Date | null;
 }
 
 export class Product extends Entity<ProductProps> {
@@ -26,10 +26,14 @@ export class Product extends Entity<ProductProps> {
         return this.props.name;
     }
 
-    get createdAt(): Date {
-        return this.props.createdAt;
+    get company_id(): number {
+        return this.props.company_id;
     }
-    get updatedAt(): Date | undefined {
-        return this.props.updatedAt;
+
+    get created_at(): Date {
+        return this.props.created_at;
+    }
+    get updated_at(): Date | null {
+        return this.props.updated_at || null;
     }
 }
