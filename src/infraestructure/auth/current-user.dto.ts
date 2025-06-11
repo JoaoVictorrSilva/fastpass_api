@@ -1,4 +1,3 @@
-import { UserCreateDTO } from "@/domain/users/mappers/user.dtos";
 import { UserType } from "src/domain/users/entities/user";
 
 export interface JWTPayloadProps {
@@ -12,7 +11,7 @@ export interface RequestProps {
     headers: {
         authorization: string;
     };
-    user: UserCreateDTO;
+    user: JWTTokenProps;
 }
 
 export interface JWTTokenProps {

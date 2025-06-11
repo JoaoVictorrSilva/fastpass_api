@@ -1,7 +1,7 @@
 import { Entity } from "@/core/shared/entity";
 
 export interface ProductProps {
-    value: bigint;
+    value: number;
     description: string;
     name: string;
     company_id: number;
@@ -14,7 +14,7 @@ export class Product extends Entity<ProductProps> {
         super(props, id);
     }
 
-    get value(): bigint {
+    get value(): number {
         return this.props.value;
     }
 

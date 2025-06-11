@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Query, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post, Query, Request, UsePipes } from "@nestjs/common";
 import { UsersService } from "../services/users.service";
 import { UserCreateDTO, UserDTO } from "../mappers/user.dtos";
 import { z } from "zod";
@@ -7,6 +7,8 @@ import { ZodValidationPipe } from "@/infraestructure/pipes/zod-validation-pipe";
 import { Role } from "@/infraestructure/auth/role.decorator";
 import { ApiBody, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserCreateSwagger } from "../mappers/swagger/singup-body.swagger";
+import { CurrentUser } from "@/infraestructure/auth/current-user.decorator";
+import { JWTTokenProps } from "@/infraestructure/auth/current-user.dto";
 
 const SignUpBodySchema = z.object({
     name: z.string().min(1),
@@ -36,11 +38,11 @@ export class UserController {
         return await this.usersService.createUser(userData as UserCreateDTO);
     }
 
-    @Get(":id")
+    @Get("/me")
     @Role(["COMMON", "SUPPLIER", "ADMIN"])
     @HttpCode(200)
-    async getUserById(@Param("id") id: string): Promise<UserDTO | null> {
-        return await this.usersService.findUserById(parseInt(id));
+    async getUserById(@CurrentUser() user: JWTTokenProps): Promise<UserDTO | null> {
+        return await this.usersService.findUserById(user.id!);
     }
 
     @Get()

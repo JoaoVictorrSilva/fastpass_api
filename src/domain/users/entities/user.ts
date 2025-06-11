@@ -11,7 +11,7 @@ export interface UserProps {
     phone: string | null;
     birth_date: Date;
     refresh_token?: string | null;
-    balance: bigint;
+    balance: number;
     company_id?: number | null;
     created_at: Date;
     updated_at?: Date | null;
@@ -44,6 +44,10 @@ export class User extends Entity<UserProps> {
 
     get phone(): string | null {
         return this.props.phone;
+    }
+
+    get balance(): number {
+        return this.props.balance;
     }
 
     get birthDate(): Date {

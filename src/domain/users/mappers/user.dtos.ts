@@ -6,6 +6,7 @@ export interface UserDTO {
     email: string;
     user_type: UserType;
     cpf: string;
+    balance: number;
     phone: string | null;
     birth_date: string;
     company_id?: number | null;

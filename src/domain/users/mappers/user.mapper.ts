@@ -9,6 +9,7 @@ export class UserMapper {
             email: user.email,
             user_type: user.userType,
             cpf: user.cpf,
+            balance: user.balance,
             phone: user.phone,
             birth_date: user.birthDate.toISOString(),
             company_id: user.companyId,
