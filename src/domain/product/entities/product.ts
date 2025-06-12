@@ -1,9 +1,11 @@
 import { Entity } from "@/core/shared/entity";
+import { Category } from "./categories";
 
 export interface ProductProps {
     value: number;
     description: string;
     name: string;
+    category: Category;
     company_id: number;
     created_at: Date;
     updated_at?: Date | null;
@@ -24,6 +26,10 @@ export class Product extends Entity<ProductProps> {
 
     get name(): string {
         return this.props.name;
+    }
+
+    get category(): Category {
+        return this.props.category;
     }
 
     get company_id(): number {

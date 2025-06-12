@@ -72,6 +72,7 @@ model product {
   name        String
   description String
   value       Int
+  category    String
   company  company @relation(fields: [company_id], references: [id])
   company_id Int
   created_at  DateTime @default(now())

@@ -1,12 +1,27 @@
 import { Prisma, product } from "@prisma/client";
 import { Product } from "../entities/product";
-import { ProductSummaryDTO } from "./product.dtos";
+import { ProductDTO, ProductSummaryDTO } from "./product.dtos";
+import { Category } from "../entities/categories";
 
 export class ProductMapper {
-    static toDto(product: Product): ProductSummaryDTO {
+    static toProductDto(product: Product): ProductDTO {
         return {
             id: product.id!,
             name: product.name,
+            category: product.category,
+            description: product.description,
+            value: product.value,
+            company_id: product.company_id,
+            created_at: product.created_at,
+            updated_at: product.updated_at,
+        };
+    }
+
+    static toSummaryDto(product: Product): ProductSummaryDTO {
+        return {
+            id: product.id!,
+            name: product.name,
+            category: product.category,
             description: product.description,
             value: product.value,
         };
@@ -18,6 +33,7 @@ export class ProductMapper {
                 name: product.name,
                 description: product.description,
                 value: product.value,
+                category: product.category as Category,
                 company_id: product.company_id,
                 created_at: product.created_at,
                 updated_at: product.updated_at || null,
@@ -31,6 +47,7 @@ export class ProductMapper {
             name: product.name,
             description: product.description,
             value: product.value,
+            category: product.category,
             created_at: product.created_at,
             updated_at: product.updated_at,
         };
