@@ -31,7 +31,7 @@ export class AuthenticationService {
         if (!isPasswordValid) throw new Error("Invalid User");
 
         const payload: Omit<JWTPayloadProps, "type"> = {
-            sub: user.id,
+            sub: user.id!,
             email: user.email,
             company_id: user.companyId,
             role: user.userType,
@@ -55,7 +55,7 @@ export class AuthenticationService {
 
         if (payload.type !== "refresh_token") throw new Error("Invalid token type");
 
-        const user = await this.userRepository.findById(payload.sub as number);
+        const user = await this.userRepository.findById(payload.sub);
         if (!user) throw new Error("User not found");
 
         if (user.refreshToken !== refreshToken) throw new Error("Invalid refresh token");

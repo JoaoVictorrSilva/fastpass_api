@@ -32,8 +32,11 @@ model user {
     refresh_token String?
     balance Int @default(0)
     company company? @relation(fields: [company_id], references: [id])
+
     extracts_from  extract[]  @relation("ExtractFrom") 
     extracts_to    extract[]  @relation("ExtractTo")   
+    tickets        tickets[]
+
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt
 }
@@ -75,6 +78,27 @@ model product {
   category    String
   company  company @relation(fields: [company_id], references: [id])
   company_id Int
+
+  tickets     tickets[]
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime? @updatedAt
+}
+
+enum TicketStatus {
+  WAITING_PAYMENT
+  PAID
+  CANCELED
+}
+
+model tickets {
+  id          Int      @id @default(autoincrement())
+  confirmation_hash String @unique
+  status      TicketStatus
+  user        user     @relation(fields: [user_id], references: [id])
+  user_id     Int
+  product     product  @relation(fields: [product_id], references: [id])
+  product_id  Int
   created_at  DateTime @default(now())
   updated_at  DateTime? @updatedAt
 }

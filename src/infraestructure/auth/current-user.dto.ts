@@ -1,7 +1,7 @@
 import { UserType } from "src/domain/users/entities/user";
 
 export interface JWTPayloadProps {
-    sub: number | null;
+    sub: number;
     email: string;
     role: UserType;
     company_id?: number | null;
@@ -16,7 +16,7 @@ export interface RequestProps {
 }
 
 export interface JWTTokenProps {
-    id: number | null;
+    id: number;
     email: string;
     role: UserType;
     company_id?: number | null;

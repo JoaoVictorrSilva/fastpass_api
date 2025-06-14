@@ -8,6 +8,7 @@ import { PrismaModule } from "./infraestructure/database/prisma.module";
 import { CryptographyModule } from "./infraestructure/cryptography/cryptography.module";
 import { ServerModule } from "./infraestructure/server/server.module";
 import { AuthModule } from "./infraestructure/auth/auth.module";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from "./infraestructure/auth/auth.module";
             envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
             validate: (env) => envSchema.parse(env),
         }),
+        EventEmitterModule.forRoot(),
         EnvModule,
         AuthModule,
         PrismaModule,
