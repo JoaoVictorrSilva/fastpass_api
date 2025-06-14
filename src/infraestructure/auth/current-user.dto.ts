@@ -4,6 +4,7 @@ export interface JWTPayloadProps {
     sub: number | null;
     email: string;
     role: UserType;
+    company_id?: number | null;
     type: "access_token" | "refresh_token";
 }
 
@@ -18,4 +19,5 @@ export interface JWTTokenProps {
     id: number | null;
     email: string;
     role: UserType;
+    company_id?: number | null;
 }

@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { ProductRepository } from "../repositories/prisma-product.repository";
-import { ProductDTO, ProductSummaryDTO } from "../mappers/product.dtos";
+import { ProductCreateDTO, ProductDTO, ProductSummaryDTO } from "../mappers/product.dtos";
 import { ProductMapper } from "../mappers/product.mapper";
+import { Product } from "../entities/product";
 
 @Injectable()
 export class ProductService {
@@ -25,5 +26,28 @@ export class ProductService {
         }
 
         return ProductMapper.toProductDto(product);
+    }
+
+    public async createProduct(productDto: ProductCreateDTO, companyId: number | null): Promise<ProductDTO> {
+        if (!productDto || !productDto.name || !productDto.value) {
+            throw new Error("Product name and price must be provided");
+        }
+
+        if (!companyId) {
+            throw new Error("User don't have permission to create a product");
+        }
+
+        const product = new Product({
+            name: productDto.name,
+            description: productDto.description,
+            category: productDto.category,
+            value: productDto.value,
+            company_id: companyId,
+            created_at: new Date(),
+        });
+
+        const productSaved = await this.productRepository.save(product);
+
+        return ProductMapper.toProductDto(productSaved);
     }
 }

@@ -1,5 +1,12 @@
 import { Category } from "../entities/categories";
 
+export interface ProductCreateDTO {
+    name: string;
+    description: string;
+    category: Category;
+    value: number;
+}
+
 export interface ProductSummaryDTO {
     id: number;
     name: string;

@@ -18,6 +18,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     validate(payload: JWTPayloadProps): JWTTokenProps {
         if (payload.type !== "access_token") throw new UnauthorizedException("Invalid token type");
 
-        return { id: payload.sub, email: payload.email, role: payload.role };
+        return { id: payload.sub, email: payload.email, role: payload.role, company_id: payload.company_id };
     }
 }

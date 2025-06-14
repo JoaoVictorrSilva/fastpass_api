@@ -33,6 +33,7 @@ export class AuthenticationService {
         const payload: Omit<JWTPayloadProps, "type"> = {
             sub: user.id,
             email: user.email,
+            company_id: user.companyId,
             role: user.userType,
         };
 
@@ -62,6 +63,7 @@ export class AuthenticationService {
         const newPayload: Omit<JWTPayloadProps, "type"> = {
             sub: payload.sub,
             email: payload.email,
+            company_id: payload.company_id,
             role: payload.role,
         };
 
