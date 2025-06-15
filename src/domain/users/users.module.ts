@@ -7,6 +7,7 @@ import { UserController } from "./controllers/user.controller";
 import { CryptographyModule } from "../../infraestructure/cryptography/cryptography.module";
 import { AuthenticationService } from "./services/authentication.service";
 import { AuthenticationController } from "./controllers/authentication.controller";
+import { CompanyRepository, PrismaCompanyRepository } from "./repositories/prisma-company.repository";
 
 @Module({
     imports: [CryptographyModule],
@@ -18,6 +19,10 @@ import { AuthenticationController } from "./controllers/authentication.controlle
         {
             provide: UserRepository,
             useClass: PrismaUserRepository,
+        },
+        {
+            provide: CompanyRepository,
+            useClass: PrismaCompanyRepository,
         },
     ],
     exports: [UserRepository, UsersService, AuthenticationService],

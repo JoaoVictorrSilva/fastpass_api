@@ -36,6 +36,7 @@ model user {
     extracts_from  extract[]  @relation("ExtractFrom") 
     extracts_to    extract[]  @relation("ExtractTo")   
     tickets        tickets[]
+    products       product[]
 
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt
@@ -47,7 +48,6 @@ model company {
     cnpj String @unique
     created_at DateTime @default(now())  
     updated_at DateTime? @updatedAt
-    products product[]
     users user[]
 }
 
@@ -76,8 +76,8 @@ model product {
   description String
   value       Int
   category    String
-  company  company @relation(fields: [company_id], references: [id])
-  company_id Int
+  user        user @relation(fields: [user_id], references: [id])
+  user_id     Int
 
   tickets     tickets[]
 

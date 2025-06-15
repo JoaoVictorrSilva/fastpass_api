@@ -28,13 +28,9 @@ export class ProductService {
         return ProductMapper.toProductDto(product);
     }
 
-    public async createProduct(productDto: ProductCreateDTO, companyId: number | null): Promise<ProductDTO> {
+    public async createProduct(productDto: ProductCreateDTO, userId: number): Promise<ProductDTO> {
         if (!productDto || !productDto.name || !productDto.value) {
             throw new Error("Product name and price must be provided");
-        }
-
-        if (!companyId) {
-            throw new Error("User don't have permission to create a product");
         }
 
         const product = new Product({
@@ -42,7 +38,7 @@ export class ProductService {
             description: productDto.description,
             category: productDto.category,
             value: productDto.value,
-            company_id: companyId,
+            user_id: userId,
             created_at: new Date(),
         });
 

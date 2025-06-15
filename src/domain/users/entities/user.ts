@@ -73,4 +73,24 @@ export class User extends Entity<UserProps> {
     get updatedAt(): Date | null {
         return this.props.updated_at || null;
     }
+
+    subtractBalance(value: number): void {
+        if (value < 0) {
+            throw new Error("Cannot subtract a negative value from balance");
+        }
+
+        if (this.props.balance < value) {
+            throw new Error("Insufficient balance");
+        }
+
+        this.props.balance -= value;
+    }
+
+    addBalance(value: number): void {
+        if (value < 0) {
+            throw new Error("Cannot add a negative value to balance");
+        }
+
+        this.props.balance += value;
+    }
 }

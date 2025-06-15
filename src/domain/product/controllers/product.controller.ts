@@ -42,7 +42,6 @@ export class ProductController {
         @Body() productDto: CreateProductBody,
         @CurrentUser() user: JWTTokenProps,
     ): Promise<ProductDTO> {
-        const companyId = user.company_id || null;
-        return this.productService.createProduct(productDto as ProductDTO, companyId);
+        return this.productService.createProduct(productDto as ProductDTO, user.id);
     }
 }

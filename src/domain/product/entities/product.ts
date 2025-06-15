@@ -6,7 +6,7 @@ export interface ProductProps {
     description: string;
     name: string;
     category: Category;
-    company_id: number;
+    user_id: number;
     created_at: Date;
     updated_at?: Date | null;
 }
@@ -32,8 +32,8 @@ export class Product extends Entity<ProductProps> {
         return this.props.category;
     }
 
-    get company_id(): number {
-        return this.props.company_id;
+    get user_id(): number {
+        return this.props.user_id;
     }
 
     get created_at(): Date {

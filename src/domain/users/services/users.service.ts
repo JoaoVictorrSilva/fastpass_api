@@ -4,6 +4,8 @@ import { User } from "../entities/user";
 import { UserMapper } from "../mappers/user.mapper";
 import { HashGenerator } from "../../../infraestructure/cryptography/bcrypt-hash-generator";
 import { UserCreateDTO, UserDTO } from "../mappers/user.dtos";
+import { OnEvent } from "@nestjs/event-emitter";
+import { Extract } from "@/domain/financial/entities/extract";
 
 @Injectable()
 export class UsersService {
@@ -58,5 +60,21 @@ export class UsersService {
         const users = await this.userRepository.findByCompanyId(companyId);
         if (!users) return null;
         return users.map((user) => UserMapper.toDTO(user));
+    }
+
+    @OnEvent("extract.created")
+    async handleExtractCreatedEvent(extractData: Extract) {
+        const userFrom = await this.userRepository.findById(extractData.userFromId);
+        const userTo = await this.userRepository.findById(extractData.userToId);
+
+        if (!userFrom || !userTo) {
+            throw new Error("User not found for extract creation");
+        }
+
+        userFrom.subtractBalance(extractData.value);
+        userTo.addBalance(extractData.value);
+
+        await this.userRepository.update(userFrom);
+        await this.userRepository.update(userTo);
     }
 }

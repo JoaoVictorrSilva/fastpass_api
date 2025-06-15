@@ -11,7 +11,7 @@ export class ProductMapper {
             category: product.category,
             description: product.description,
             value: product.value,
-            company_id: product.company_id,
+            user_id: product.user_id,
             created_at: product.created_at,
             updated_at: product.updated_at,
         };
@@ -34,7 +34,7 @@ export class ProductMapper {
                 description: product.description,
                 value: product.value,
                 category: product.category as Category,
-                company_id: product.company_id,
+                user_id: product.user_id,
                 created_at: product.created_at,
                 updated_at: product.updated_at || null,
             },
@@ -47,16 +47,15 @@ export class ProductMapper {
             name: product.name,
             description: product.description,
             value: product.value,
+            user: {
+                connect: {
+                    id: product.user_id,
+                },
+            },
             category: product.category,
             created_at: product.created_at,
             updated_at: product.updated_at,
         };
-
-        if (product.company_id !== null) {
-            data.company = {
-                connect: { id: product.company_id },
-            };
-        }
 
         return data;
     }

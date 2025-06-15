@@ -21,7 +21,7 @@ export interface ProductDTO {
     description: string;
     category: Category;
     value: number;
-    company_id?: number | null;
+    user_id: number;
     created_at?: Date;
     updated_at?: Date | null;
 }
