@@ -1,18 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { TicketRepository } from "../repositories/prisma-ticket.repository";
 import { Ticket } from "../entities/ticket";
-import { Product } from "../entities/product";
 import { TicketMapper } from "../mappers/ticket.mapper";
 import { TicketUrlDTO } from "../mappers/ticket.dtos";
 import { CodeGenerator } from "@/infraestructure/cryptography/random-bytes-generator";
 import { TicketsGateway } from "../gateways/tickets.gateway";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ProductRepository } from "../repositories/prisma-product.repository";
-
-export interface TicketConfirmationEvent {
-    product: Product;
-    ticket: Ticket;
-}
+import { TicketConfirmationEvent } from "../events/ticket-confirmed.event";
 
 @Injectable()
 export class TicketsService {
@@ -51,12 +46,13 @@ export class TicketsService {
             throw new Error("Ticket not found");
         }
 
+        if (ticket.status !== "WAITING_PAYMENT") {
+            throw new Error("Ticket is not in a valid state for confirmation");
+        }
+
         const product = await this.productRepository.findById(ticket.product_id);
 
-        this.eventEmitter.emit("ticket.confirmed", {
-            ticket: ticket,
-            product: product,
-        });
+        this.eventEmitter.emit("ticket.confirmed", new TicketConfirmationEvent(product!, ticket));
 
         this.ticketGateway.emitPaymentConfirmed(ticket.id!);
 

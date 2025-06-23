@@ -6,6 +6,7 @@ import { HashGenerator } from "../../../infraestructure/cryptography/bcrypt-hash
 import { UserCreateDTO, UserDTO } from "../mappers/user.dtos";
 import { OnEvent } from "@nestjs/event-emitter";
 import { Extract } from "@/domain/financial/entities/extract";
+import { ExtractCreatedEvent } from "@/domain/financial/events/extract-created.event";
 
 @Injectable()
 export class UsersService {
@@ -63,7 +64,9 @@ export class UsersService {
     }
 
     @OnEvent("extract.created")
-    async handleExtractCreatedEvent(extractData: Extract) {
+    async handleExtractCreatedEvent(payload: ExtractCreatedEvent) {
+        const extractData = payload.extract;
+
         const userFrom = await this.userRepository.findById(extractData.userFromId);
         const userTo = await this.userRepository.findById(extractData.userToId);
 
@@ -76,6 +79,5 @@ export class UsersService {
 
         await this.userRepository.update(userFrom);
         await this.userRepository.update(userTo);
-        console.log(`Value subtracted: userfrom: ${userFrom.balance} - userto: ${userTo.balance}`);
     }
 }

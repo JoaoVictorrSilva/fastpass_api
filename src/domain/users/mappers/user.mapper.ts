@@ -43,6 +43,7 @@ export class UserMapper {
             name: domainUser.name,
             email: domainUser.email,
             password: domainUser.password,
+            balance: domainUser.balance,
             user_type: domainUser.userType,
             cpf: domainUser.cpf,
             phone: domainUser.phone || null,
