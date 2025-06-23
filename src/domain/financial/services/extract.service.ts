@@ -25,6 +25,7 @@ export class ExtractService {
         });
 
         const savedExtract = await this.extractRepository.save(extractData);
+        console.log("Extract created:", savedExtract);
         this.eventEmitter.emit("extract.created", savedExtract);
     }
 }

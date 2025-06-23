@@ -46,19 +46,22 @@ export class TicketsService {
 
     async confirmTicket(confirmationHash: string): Promise<Ticket> {
         const ticket = await this.ticketRepository.findByConfirmationHash(confirmationHash);
+
         if (!ticket) {
             throw new Error("Ticket not found");
         }
 
+        const product = await this.productRepository.findById(ticket.product_id);
+
         this.eventEmitter.emit("ticket.confirmed", {
-            product: await this.productRepository.findById(ticket.product_id),
             ticket: ticket,
+            product: product,
         });
 
         this.ticketGateway.emitPaymentConfirmed(ticket.id!);
 
         ticket.status = "PAID";
-        return this.ticketRepository.update(ticket);
+        return await this.ticketRepository.update(ticket);
     }
 
     async cancelTicket(confirmationHash: string): Promise<Ticket> {

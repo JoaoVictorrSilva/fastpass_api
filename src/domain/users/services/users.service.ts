@@ -76,5 +76,6 @@ export class UsersService {
 
         await this.userRepository.update(userFrom);
         await this.userRepository.update(userTo);
+        console.log(`Value subtracted: userfrom: ${userFrom.balance} - userto: ${userTo.balance}`);
     }
 }
