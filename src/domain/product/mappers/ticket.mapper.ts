@@ -1,13 +1,17 @@
 import { Prisma, tickets } from "@prisma/client";
 import { Ticket } from "../entities/ticket";
 import { TicketUrlDTO } from "./ticket.dtos";
+import { Product } from "../entities/product";
 
 export class TicketMapper {
-    static toDTO(ticket: Ticket): TicketUrlDTO {
+    static toDTO(ticket: Ticket, product: Product): TicketUrlDTO {
         return {
             id: ticket.id!,
+            product_id: ticket.product_id,
+            product_name: product.name,
+            product_value: product.value,
             status: ticket.status,
-            confirmation_url: `/confirm?hash=${ticket.confirmation_hash}`,
+            confirmation_hash: ticket.confirmation_hash,
         };
     }
 

@@ -25,6 +25,12 @@ export class TicketsService {
     ) {}
 
     async createTicket({ productId, userId }: { productId: number; userId: number }): Promise<TicketUrlDTO> {
+        const product = await this.productRepository.findById(productId);
+
+        if (!product) {
+            throw new Error("Product not found");
+        }
+
         const ticket = await this.ticketRepository.save(
             new Ticket({
                 product_id: productId,
@@ -35,7 +41,7 @@ export class TicketsService {
             }),
         );
 
-        return TicketMapper.toDTO(ticket);
+        return TicketMapper.toDTO(ticket, product);
     }
 
     async confirmTicket(confirmationHash: string): Promise<Ticket> {
@@ -48,6 +54,7 @@ export class TicketsService {
             product: await this.productRepository.findById(ticket.product_id),
             ticket: ticket,
         });
+
         this.ticketGateway.emitPaymentConfirmed(ticket.id!);
 
         ticket.status = "PAID";
